@@ -1,41 +1,63 @@
 ﻿<!DOCTYPE html>
-<html>
+<html data-ng-app="ScampApp">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <title>Scamp</title>
+
+    <link href="content/css/bootstrap.css" rel="stylesheet" />
+    <link href="content/css/bootstrap-theme.css" rel="stylesheet" />
+    <link href="content/css/index.css" rel="stylesheet" />
+    <link href="content/css/toaster.css" rel="stylesheet" />
+    <link href="content/css/loading-bar.min.css" rel="stylesheet" />
+    <link href="content/css/site.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", null, new { @class = "navbar-brand" })
+    <div id="page">
+        <header class="container" data-ng-controller="navigationController">
+            <div id="menu" class="navbar navbar-default">
+                <div class="navbar-header">
+                    <button class="btn btn-success navbar-toggle" data-ng-click="navbarExpanded = !navbarExpanded">
+                        <span class="icon icon-bars"></span>
+                    </button>
+                    <div id="logo">
+                        <a href='#/'>
+                            <h4>Simple Cloud Application Management Program (SCAMP)</h4>
+                        </a>
+                    </div>
+                </div>
+                <div class="navbar-collapse collapse" data-collapse="!navbarExpanded">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li data-ng-class="{'active':isActive('/home')}"><a href="#/home">Home</a></li>
+                        <li data-ng-class="{'active':isActive('/settings')}"><a href="#/settings">Settings</a></li>
+                        <li data-ng-class="{'active':isActive('/createcourse')}"><a href="#/createcourse">Create a course</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="container body-content">
+        </header>
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        <footer class="container">
+            <p>SCAMP</p>
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    <!-- Third party scripts-->
+    <script src="scripts/angular.min.js"></script>
+    <script src="scripts/angular-resource.min.js"></script>
+    <script src="scripts/angular-animate.min.js"></script>
+    <script src="scripts/angular-route.min.js"></script>
+    <script src="scripts/toaster.js"></script>
+    <script src="scripts/angular-ui/ui-bootstrap.min.js"></script>
+    <script src="scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
+
+    <!-- Main script -->
+    <script src="~/Content/app/controllers/app.js"></script>
+    <!-- Services -->
+    <script src="~/Content/app/services/courseService.js"></script>
+    <!-- Controllers -->
+    <script src="~/Content/app/controllers/homeController.js"></script>
+    <script src="~/Content/app/controllers/navigationController.js"></script>
+    <script src="~/Content/app/controllers/editcourseController.js"></script>
+    <script src="~/Content/app/controllers/createcourseController.js"></script>
 </body>
 </html>

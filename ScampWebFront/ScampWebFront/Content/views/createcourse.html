@@ -1,0 +1,10 @@
+﻿<div>
+    <input type="text" ng-model="name" class="form-control" placeholder="Enter course's name here!" />
+    <div><a href="" data-ng-click="create(name)">Create</a></div>
+
+    <div ng-controller="createcourseController">
+        <ul ng-repeat="s in students | orderBy: 'last' ">
+            <li><a href="/#/editcourse?id={{s.Id}}">{{c.FirstName}} {{c.LastName}} - {{c.Email}}</a></li>
+        </ul>
+    </div>
+</div>
