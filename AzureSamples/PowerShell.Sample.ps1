@@ -2,19 +2,22 @@
 function Run
 {
     $BaseGroupName = "Testing.2015.CS150A"
-    $GroupCount = 5
+    $GroupCount = 1
 
     # Clean up previous resource groups
     Get-AzureResourceGroup | ?{ $_.ResourceGroupName -like "Testing.*" } | Remove-AzureResourceGroup -Verbose -Force
     
-    #foreach ($i in 1..$GroupCount)
-    #{
-    #    [PSCustomObject] @{
-    #        MicrosoftId = "emaino@gmail.com";
-    #        FirstName = "Eric.XXXXXXXXXX";
-    #        LastName = "Maino.XXXXXXXXXXXXXXXXXXXXXXXX";
-    #    } | New-SchoolResourceGroup -NamePrefix $BaseGroupName
-    #}
+    $results = foreach ($i in 2..$GroupCount)
+    {
+        [PSCustomObject] @{
+            MicrosoftId = "emaino@gmail.com";
+            FirstName = "Eric";
+            LastName = "Maino";
+        } | New-SchoolResourceGroup -NamePrefix $BaseGroupName
+    } 
+
+    $json = $results | ConvertTo-Json -Depth 10
+    $json | Out-File -FilePath  C:\src\SCAMP\results.json
 }
 
 function New-SchoolResourceGroup
@@ -48,7 +51,8 @@ function New-SchoolResourceGroup
         $Location = "West Us"
     )
 
-    $groupKey = [System.IO.Path]::GetFileNameWithoutExtension([System.IO.Path]::GetRandomFileName())
+    $servicePlan = "Student-Web-Site"
+    $groupKey = ([System.IO.Path]::GetRandomFileName() -replace "[^a-z0-9]", "")
     
     #Create the group
     $groupName = "$($NamePrefix).$($LastName).$($FirstName).$($groupKey)" -replace "[^a-z0-9.-]", ""
@@ -57,7 +61,20 @@ function New-SchoolResourceGroup
     New-AzureResourceGroup -Name $groupName  -Location $location -Force | Out-Null
     
     #Add user to the group
-    $roles | %{ New-AzureRoleAssignment -Mail $userEmail -ResourceGroupName $groupName -RoleDefinitionName $_  | Out-Null }
+    $roles | %{ New-AzureRoleAssignment -Mail $MicrosoftId -ResourceGroupName $groupName -RoleDefinitionName $_  | Out-Null }
+
+
+    New-AzureAppServicePlan -ResourceGroupName $groupName -Name $servicePlan -Location $Location -Sku Shared | Out-Null
+    New-AzureWebApp -Location $Location -ResourceGroupName $groupName -Name "$($groupKey)" -AppServicePlan $servicePlan | Out-Null
+
+    ((Get-AzureWebAppPublishingProfile -ResourceGroupName $groupName -Name $groupKey) | ?{ $_.PublishMethod -like "FTP" } | Select -First 1) | %{
+        [PSCustomObject] @{
+            WebSite = $_.DestinationAppUri;
+            FtpAddress = $_.PublishUrl;
+            FtpUserName = $_.UserName;
+            FtpPassword = $_.UserPassword;
+        }
+    }
 }
 
 Switch-AzureMode -Name AzureResourceManager

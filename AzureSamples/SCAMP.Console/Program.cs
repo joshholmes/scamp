@@ -1,217 +1,129 @@
-﻿using Microsoft.Azure;
+﻿using Microsoft.Azure.Common.Authentication;
+using Microsoft.Azure.Common.Authentication.Models;
+using Microsoft.Azure.Graph.RBAC;
+using Microsoft.Azure.Management.Authorization;
+using Microsoft.Azure.Management.Authorization.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.WebSites;
+using Microsoft.Azure.Management.WebSites.Models;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
-using Microsoft.WindowsAzure.Management.WebSites;
-using Microsoft.WindowsAzure.Management.WebSites.Models;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace SCAMP.Console
+namespace ConsoleApplication9
 {
-    class Program
+    static class Program
     {
+        private const string clientIdFromAzureAdApplication = "855eb965-78e4-4e3b-8d66-93661cfd4d1b";
+        private const string clientAppRedirectUri = "http://localhost/ResourceManagement";
+        private const string authenticationUrl = "https://login.windows.net/d6763b47-fa3d-4afe-8311-7a062f817f88";
+        private const string subscriptionId = "325eeaae-8cee-47fe-9a20-2aa220db3435";
+        private const string azureManagementResourceUri = "https://management.core.windows.net/";
+        private static string[] roles = new string[] {
+            "WebSite Contributor",
+            "Storage Account Contributor",
+            "Sql Server Contributor"
+        };
+
+        private static Regex alphaNumeric = new Regex("[^a-z0-9]", RegexOptions.IgnoreCase);
+        private static Regex alphaNumericWithPeriod = new Regex(@"[^a-z0-9\.-]", RegexOptions.IgnoreCase);
+
         static void Main(string[] args)
         {
-            Run().Wait();
+            var azureProfile = new AzureProfile();
+            var profileClient = new ProfileClient(azureProfile);
+            var azureEnvironment = AzureEnvironment.PublicEnvironments["AzureCloud"];
+
+            var token = GetAuthToken();
+            profileClient.InitializeProfile(azureEnvironment, Guid.Parse(subscriptionId), token, "182dd5b9-4dc7-4cff-b518-282874c84784", "");
+
+            var webClient = azureProfile.CreateClient<WebSiteManagementClient>();
+            var rmClient = azureProfile.CreateClient<ResourceManagementClient>();
+            var authClient = azureProfile.CreateClient<AuthorizationManagementClient>();
+            var creds = AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(azureProfile.Context);
+            var graphClient = new GraphRbacManagementClient("d6763b47-fa3d-4afe-8311-7a062f817f88", creds, azureProfile.Context.Environment.GetEndpointAsUri(AzureEnvironment.Endpoint.Graph));
+
+            var profile = Create(rmClient, authClient, webClient, "Eric", "Maino", "emaino@gmail.com");
         }
 
-        private static async Task Run()
+        public static TClient CreateClient<TClient>(this AzureProfile profile) where TClient : Hyak.Common.ServiceClient<TClient>
         {
-            var managementToken = GetAuthToken();
-            var roleToken = new TokenCloudCredentials("325eeaae-8cee-47fe-9a20-2aa220db3435", managementToken);
-            var webToken = new Microsoft.WindowsAzure.TokenCloudCredentials("325eeaae-8cee-47fe-9a20-2aa220db3435", managementToken);
-            var graphToken = new TokenCloudCredentials("325eeaae-8cee-47fe-9a20-2aa220db3435", GetAuthToken("https://graph.windows.net/"));
-            var users = await GetUsers(graphToken, "saintmartincodirectory.onmicrosoft.com");
-
-            var rmClient = new ResourceManagementClient(roleToken);
-            var webClient = new WebSiteManagementClient(webToken);
-            var factory = new ResourceGroupFactory(rmClient, webClient);
-            var term = new TermClass("Testing.2015", "CS150");
-            var result = await factory.Create(term, new Person("Eric", "Maino", "emaino@gmail.com", "f132a985-c8b9-4a91-8e0b-0921cce95fed"));
-
-            //var l = rmClient.ResourceGroups.List(new ResourceGroupListParameters());
-            //ReadRole(rmClient).Wait();
+            return AzureSession.ClientFactory.CreateClient<TClient>(profile.Context, AzureEnvironment.Endpoint.ResourceManager);
         }
 
-        private static async Task<IEnumerable<AzureAdUser>> GetUsers(TokenCloudCredentials token, string directory)
+        public static WebSiteGetPublishProfileResponse.PublishProfile Create(IResourceManagementClient client, IAuthorizationManagementClient auth, WebSiteManagementClient web, string firstName, string lastName, string microsoftId)
         {
-            HttpClient client = new HttpClient();
-            string uriFormatString = "https://graph.windows.net/{0}/users?api-version=2013-04-05";
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, string.Format(uriFormatString, directory));
-            request.Headers.Add(HttpRequestHeader.Authorization.ToString(), "Bearer " + token.Token);
-            var result = await client.SendAsync(request);
-            var content = await result.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<AzureAdDirectoryResult>(content).Value;
+            string namePrefix = "Testing.2015";
+            string servicePlan = "Student-Web-Site";
+            string uniqueKey = alphaNumeric.Replace(Path.GetRandomFileName(), "");
+            string groupName = alphaNumericWithPeriod.Replace(String.Join(".", namePrefix, lastName, firstName, uniqueKey), "");
+
+            var resourceGroups = client.ResourceGroups;
+            var groupConfig = new ResourceGroup()
+            {
+                Location = "West US",
+            };
+
+            //var user = graph.User.Get(microsoftId).User;
+            var group = resourceGroups.CreateOrUpdate(groupName, groupConfig);
+            var adRoles = auth.RoleDefinitions.List().RoleDefinitions.ToList();
+
+            foreach (var roleName in roles)
+            {
+                var role = adRoles.Where(x => String.Equals(x.Properties.RoleName, roleName, StringComparison.OrdinalIgnoreCase)).First();
+
+                var roleCreate = new RoleAssignmentCreateParameters()
+                {
+                    Properties = new RoleAssignmentProperties()
+                    {
+                        PrincipalId = Guid.Parse("f132a985-c8b9-4a91-8e0b-0921cce95fed"),
+                        RoleDefinitionId = role.Id
+                    }
+                };
+
+                auth.RoleAssignments.Create(group.ResourceGroup.Id, Guid.NewGuid(), roleCreate);
+            }
+
+            var plan = new WebHostingPlanCreateOrUpdateParameters(
+                new WebHostingPlan()
+                {
+                    Location = "West US",
+                    Name = servicePlan,
+                    Properties = new WebHostingPlanProperties()
+                    {
+                        Sku = SkuOptions.Shared,
+                        NumberOfWorkers = 1,
+                        WorkerSize = WorkerSizeOptions.Small,
+                    }
+                }
+            );
+            var hostingPlan = web.WebHostingPlans.CreateOrUpdate(groupName, plan);
+
+            var siteParams = new WebSiteCreateOrUpdateParameters(new WebSiteBase()
+            {
+                Location = plan.WebHostingPlan.Location,
+                Name = uniqueKey,
+                Properties = new WebSiteBaseProperties(servicePlan)
+            });
+            var site = web.WebSites.CreateOrUpdate(groupName, uniqueKey, null, siteParams);
+
+            return web.WebSites.GetPublishProfile(groupName, uniqueKey, null).Single(x => String.Equals(x.PublishMethod, "FTP"));
         }
 
-        static string GetAuthToken(string resourceUri = "https://management.core.windows.net/")
+        static string GetAuthToken(string resourceUri = azureManagementResourceUri)
         {
-            var context = new AuthenticationContext("https://login.windows.net/d6763b47-fa3d-4afe-8311-7a062f817f88");
+            var context = new AuthenticationContext(authenticationUrl);
             var result = context.AcquireToken(
-                clientId: "855eb965-78e4-4e3b-8d66-93661cfd4d1b",
+                clientId: clientIdFromAzureAdApplication,
                 resource: resourceUri,
-                redirectUri: new Uri("http://localhost/ResourceManagement"),
+                redirectUri: new Uri(clientAppRedirectUri),
                 promptBehavior: PromptBehavior.Auto
                 );
 
             return result.AccessToken;
-        }
-    }
-
-    public class AzureAdDirectoryResult
-    {
-        public IEnumerable<AzureAdUser> Value { get; set; }
-    }
-
-    public class AzureAdUser
-    {
-        public string ObjectId { get; set; }
-        public string DisplayName { get; set; }
-        public string Mail { get; set; }
-        public string UserPrincipalName { get; set; }
-        public string GivenName { get; set; }
-        public string SurName { get; set; }
-    }
-
-    public class RoleAssignmentRequest
-    {
-        public RoleAssignmentProperties properties { get; set; }
-    }
-
-    public class RoleAssignmentProperties
-    {
-        public string roleDefinitionId { get; set; }
-        public string principalId { get; set; }
-        public string scope { get; set; }
-    }
-
-    public class TermClass
-    {
-        public TermClass(string term, string name)
-        {
-            this.Term = term;
-            this.Name = name;
-        }
-
-        public string Term { get; private set; }
-        public string Name { get; private set; }
-    }
-
-    public class Person
-    {
-        public Person(string firstName, string lastName, string microsoftId, string id)
-        {
-            this.FirstName = firstName;
-            this.LastName = lastName;
-            this.MicrosoftId = microsoftId;
-            this.Id = id;
-        }
-
-        public string FirstName { get; private set; }
-        public string LastName { get; private set; }
-        public string MicrosoftId { get; private set; }
-        public string Id { get; set; }
-    }
-
-    class RoleCollection
-    {
-        public IEnumerable<Role> Value { get; set; }
-    }
-
-    class Role
-    {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public RoleProperties Properties { get; set; }
-    }
-
-    class RoleProperties
-    {
-        public string RoleName { get; set; }
-    }
-    public class ResourceGroupFactory
-    {
-        private readonly ResourceManagementClient client;
-        private readonly WebSiteManagementClient websiteClient;
-        private readonly Regex safeNameRegex;
-        private readonly ResourceGroup defaultLocation;
-
-        public ResourceGroupFactory(ResourceManagementClient client, WebSiteManagementClient webClient)
-        {
-            this.client = client;
-            this.websiteClient = webClient;
-            this.safeNameRegex = new Regex(@"[^a-z0-9\.]", RegexOptions.IgnoreCase);
-            this.defaultLocation = new ResourceGroup("West US");
-        }
-
-        public async Task<ResourceGroupExtended> Create(TermClass termClass, Person resourceOwner)
-        {
-            //string groupName = String.Join(".", termClass.Term, termClass.Name, resourceOwner.LastName, resourceOwner.FirstName, UniqueSuffix);
-            //groupName = safeNameRegex.Replace(groupName, String.Empty);
-            //var group = (await client.ResourceGroups.CreateOrUpdateAsync(groupName, defaultLocation)).ResourceGroup;
-            //await AddUserToRole(group.Name, "Contributor", resourceOwner.Id);
-            await CreateWebSite(null);
-            return null;
-        }
-
-        private async Task CreateWebSite(ResourceGroupExtended group)
-        {
-            var spaces = await websiteClient.WebSpaces.ListAsync(new CancellationToken());
-
-            //var siteName = "EricMai.Test" //group.Name.Replace(".", "-");
-            //var result = await websiteClient.WebSites.CreateAsync(siteName, new WebSiteCreateParameters()
-            //{
-            //    Name = siteName,
-            //    ServerFarm = 
-            //}, new CancellationToken());
-        }
-
-        private async Task AddUserToRole(string groupName, string roleName, string userId)
-        {
-            var role = (await ReadRoles(client)).Value.Where(x => String.Equals(x.Properties.RoleName, roleName, StringComparison.OrdinalIgnoreCase)).Single();
-            var roleRequest = new RoleAssignmentRequest()
-            {
-                properties = new RoleAssignmentProperties()
-                {
-                    roleDefinitionId = role.Id,
-                    scope = String.Format(@"/subscriptions/{0}/resourceGroups/{1}/", client.Credentials.SubscriptionId, groupName),
-                    principalId = userId
-                },
-            };
-
-            var s = String.Format("{0}{1}providers/Microsoft.Authorization/roleAssignments/{2}?api-version={3}", client.BaseUri.AbsoluteUri.TrimEnd(new[] { '/' }), roleRequest.properties.scope, roleRequest.properties.principalId, client.ApiVersion);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, s);
-            request.Headers.Add(HttpRequestHeader.Authorization.ToString(), "Bearer " + ((TokenCloudCredentials)client.Credentials).Token);
-            var json = JsonConvert.SerializeObject(roleRequest);
-            request.Content = new StringContent(json, Encoding.UTF8, "application/json");
-            var content = await (await client.HttpClient.SendAsync(request)).Content.ReadAsStringAsync();
-        }
-
-        private static async Task<RoleCollection> ReadRoles(ResourceManagementClient c)
-        {
-            var s = String.Format("{0}subscriptions/{1}/providers/Microsoft.Authorization/roleDefinitions?api-version={2}", c.BaseUri.AbsoluteUri, c.Credentials.SubscriptionId, c.ApiVersion);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, s);
-            request.Headers.Add(HttpRequestHeader.Authorization.ToString(), "Bearer " + ((TokenCloudCredentials)c.Credentials).Token);
-            var content = await (await c.HttpClient.SendAsync(request)).Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<RoleCollection>(content);
-        }
-
-        public object UniqueSuffix
-        {
-            get
-            {
-                return Path.GetFileName(Path.GetRandomFileName());
-            }
         }
     }
 }
