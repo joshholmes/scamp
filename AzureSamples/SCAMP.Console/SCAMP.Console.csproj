@@ -7,10 +7,11 @@
     <ProjectGuid>{AA07E5BD-5BBA-4195-A507-4AA7D3A959C2}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SCAMP.Console</RootNamespace>
+    <RootNamespace>SCAMP</RootNamespace>
     <AssemblyName>SCAMP.Console</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,48 +37,43 @@
       <HintPath>..\packages\Hyak.Common.1.0.2\lib\net45\Hyak.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Commands.Resources">
-      <HintPath>..\..\..\..\Users\ericmai\Documents\Visual Studio 2013\Projects\ConsoleApplication9\ConsoleApplication9\bin\Debug\Microsoft.Azure.Commands.Resources.dll</HintPath>
+      <HintPath>..\packages\AzureReferences\Microsoft.Azure.Commands.Resources.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Commands.Tags">
-      <HintPath>..\..\..\..\Users\ericmai\Documents\Visual Studio 2013\Projects\ConsoleApplication9\ConsoleApplication9\bin\Debug\Microsoft.Azure.Commands.Tags.dll</HintPath>
+      <HintPath>..\packages\AzureReferences\Microsoft.Azure.Commands.Tags.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Commands.Websites">
-      <HintPath>..\..\..\..\Users\ericmai\Documents\Visual Studio 2013\Projects\ConsoleApplication9\ConsoleApplication9\bin\Debug\Microsoft.Azure.Commands.Websites.dll</HintPath>
+      <HintPath>..\packages\AzureReferences\Microsoft.Azure.Commands.Websites.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Azure.Common, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Users\ericmai\Documents\Visual Studio 2013\Projects\ConsoleApplication9\ConsoleApplication9\bin\Debug\Microsoft.Azure.Common.dll</HintPath>
+    <Reference Include="Microsoft.Azure.Common">
+      <HintPath>..\packages\AzureReferences\Microsoft.Azure.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Common.Authentication">
-      <HintPath>..\..\..\..\Users\ericmai\Documents\Visual Studio 2013\Projects\ConsoleApplication9\ConsoleApplication9\bin\Debug\Microsoft.Azure.Common.Authentication.dll</HintPath>
+      <HintPath>..\packages\AzureReferences\Microsoft.Azure.Common.Authentication.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Azure.Common.NetFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Users\ericmai\Documents\Visual Studio 2013\Projects\ConsoleApplication9\ConsoleApplication9\bin\Debug\Microsoft.Azure.Common.NetFramework.dll</HintPath>
+    <Reference Include="Microsoft.Azure.Common.NetFramework">
+      <HintPath>..\packages\AzureReferences\Microsoft.Azure.Common.NetFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Gallery">
-      <HintPath>..\..\..\..\Users\ericmai\Documents\Visual Studio 2013\Projects\ConsoleApplication9\ConsoleApplication9\bin\Debug\Microsoft.Azure.Gallery.dll</HintPath>
+      <HintPath>..\packages\AzureReferences\Microsoft.Azure.Gallery.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Graph.RBAC">
-      <HintPath>..\..\..\..\Users\ericmai\Documents\Visual Studio 2013\Projects\ConsoleApplication9\ConsoleApplication9\bin\Debug\Microsoft.Azure.Graph.RBAC.dll</HintPath>
+      <HintPath>..\packages\AzureReferences\Microsoft.Azure.Graph.RBAC.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Management.Authorization">
-      <HintPath>..\..\..\..\Users\ericmai\Documents\Visual Studio 2013\Projects\ConsoleApplication9\ConsoleApplication9\bin\Debug\Microsoft.Azure.Management.Authorization.dll</HintPath>
+      <HintPath>..\packages\AzureReferences\Microsoft.Azure.Management.Authorization.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Management.WebSites">
-      <HintPath>..\..\..\..\Users\ericmai\Documents\Visual Studio 2013\Projects\ConsoleApplication9\ConsoleApplication9\bin\Debug\Microsoft.Azure.Management.WebSites.dll</HintPath>
+      <HintPath>..\packages\AzureReferences\Microsoft.Azure.Management.WebSites.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Azure.ResourceManager, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Users\ericmai\Documents\Visual Studio 2013\Projects\ConsoleApplication9\ConsoleApplication9\bin\Debug\Microsoft.Azure.ResourceManager.dll</HintPath>
+    <Reference Include="Microsoft.Azure.ResourceManager">
+      <HintPath>..\packages\AzureReferences\Microsoft.Azure.ResourceManager.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory, Version=2.18.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Users\ericmai\Documents\Visual Studio 2013\Projects\ConsoleApplication9\ConsoleApplication9\bin\Debug\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory">
+      <HintPath>..\packages\AzureReferences\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms, Version=2.18.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Users\ericmai\Documents\Visual Studio 2013\Projects\ConsoleApplication9\ConsoleApplication9\bin\Debug\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms">
+      <HintPath>..\packages\AzureReferences\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
@@ -89,7 +85,7 @@
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Commands.Common">
-      <HintPath>..\..\..\..\Users\ericmai\Documents\Visual Studio 2013\Projects\ConsoleApplication9\ConsoleApplication9\bin\Debug\Microsoft.WindowsAzure.Commands.Common.dll</HintPath>
+      <HintPath>..\packages\AzureReferences\Microsoft.WindowsAzure.Commands.Common.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -113,8 +109,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\ProvisioningConfig.cs" />
+    <Compile Include="Provisioning\Factories\AssignUserToRoleFactory.cs" />
+    <Compile Include="Provisioning\AzureFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Provisioning\Factories\CreateResourceGroupFactory.cs" />
+    <Compile Include="Provisioning\Factories\CreateWebHostingPlanFactory.cs" />
+    <Compile Include="Provisioning\Factories\CreateWebSiteFactory.cs" />
+    <Compile Include="Provisioning\IProvisionAction.cs" />
+    <Compile Include="Contracts\Person.cs" />
+    <Compile Include="Provisioning\Factories\ProvisonFactory.cs" />
+    <Compile Include="Provisioning\TestProvision.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

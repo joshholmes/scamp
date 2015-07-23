@@ -12,6 +12,8 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using SCAMP.Provisioning;
+using SCAMP.Provisions;
 
 namespace ConsoleApplication9
 {
@@ -33,20 +35,22 @@ namespace ConsoleApplication9
 
         static void Main(string[] args)
         {
-            var azureProfile = new AzureProfile();
-            var profileClient = new ProfileClient(azureProfile);
-            var azureEnvironment = AzureEnvironment.PublicEnvironments["AzureCloud"];
+            new TestProvision().Provision();
 
-            var token = GetAuthToken();
-            profileClient.InitializeProfile(azureEnvironment, Guid.Parse(subscriptionId), token, "182dd5b9-4dc7-4cff-b518-282874c84784", "");
-
-            var webClient = azureProfile.CreateClient<WebSiteManagementClient>();
-            var rmClient = azureProfile.CreateClient<ResourceManagementClient>();
-            var authClient = azureProfile.CreateClient<AuthorizationManagementClient>();
-            var creds = AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(azureProfile.Context);
-            var graphClient = new GraphRbacManagementClient("d6763b47-fa3d-4afe-8311-7a062f817f88", creds, azureProfile.Context.Environment.GetEndpointAsUri(AzureEnvironment.Endpoint.Graph));
-
-            var profile = Create(rmClient, authClient, webClient, "Eric", "Maino", "emaino@gmail.com");
+           //var azureProfile = new AzureProfile();
+           //var profileClient = new ProfileClient(azureProfile);
+           //var azureEnvironment = AzureEnvironment.PublicEnvironments["AzureCloud"];
+           
+           //var token = GetAuthToken();
+           //profileClient.InitializeProfile(azureEnvironment, Guid.Parse(subscriptionId), token, "182dd5b9-4dc7-4cff-b518-282874c84784", "");
+           
+           //var webClient = azureProfile.CreateClient<WebSiteManagementClient>();
+           //var rmClient = azureProfile.CreateClient<ResourceManagementClient>();
+           //var authClient = azureProfile.CreateClient<AuthorizationManagementClient>();
+           //var creds = AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(azureProfile.Context);
+           //var graphClient = new GraphRbacManagementClient("d6763b47-fa3d-4afe-8311-7a062f817f88", creds, azureProfile.Context.Environment.GetEndpointAsUri(AzureEnvironment.Endpoint.Graph));
+           
+           //var profile = Create(rmClient, authClient, webClient, "Eric", "Maino", "emaino@gmail.com");
         }
 
         public static TClient CreateClient<TClient>(this AzureProfile profile) where TClient : Hyak.Common.ServiceClient<TClient>
