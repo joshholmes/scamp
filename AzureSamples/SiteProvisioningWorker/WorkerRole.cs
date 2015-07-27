@@ -1,18 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
+using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Diagnostics;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Microsoft.WindowsAzure.Storage;
 using SCAMP.Provisioning;
-using SCAMP.Provisioning.Factories;
-using Microsoft.ServiceBus.Messaging;
+using System;
+using System.Diagnostics;
+using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SiteProvisioningWorker
 {
@@ -85,7 +80,7 @@ namespace SiteProvisioningWorker
                 }
                 catch (Exception ex)
                 {
-                    Trace.TraceInformation(ex.ToString());
+                    Trace.TraceError(ex.ToString());
                     client = GetOrRenewClient();
                 }
 
