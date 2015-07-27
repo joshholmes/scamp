@@ -5,6 +5,10 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCAMP.Console", "SCAMP.Console\SCAMP.Console.csproj", "{AA07E5BD-5BBA-4195-A507-4AA7D3A959C2}"
 EndProject
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "SiteProvisionService", "SiteProvisionService\SiteProvisionService.ccproj", "{2D4B1995-DD19-44C4-9D58-BAA9891CBEBA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiteProvisioningWorker", "SiteProvisioningWorker\SiteProvisioningWorker.csproj", "{77EAEEDA-69D8-4908-9FDD-BDBC747AE4E1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{AA07E5BD-5BBA-4195-A507-4AA7D3A959C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA07E5BD-5BBA-4195-A507-4AA7D3A959C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA07E5BD-5BBA-4195-A507-4AA7D3A959C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D4B1995-DD19-44C4-9D58-BAA9891CBEBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D4B1995-DD19-44C4-9D58-BAA9891CBEBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D4B1995-DD19-44C4-9D58-BAA9891CBEBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D4B1995-DD19-44C4-9D58-BAA9891CBEBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77EAEEDA-69D8-4908-9FDD-BDBC747AE4E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77EAEEDA-69D8-4908-9FDD-BDBC747AE4E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77EAEEDA-69D8-4908-9FDD-BDBC747AE4E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77EAEEDA-69D8-4908-9FDD-BDBC747AE4E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
