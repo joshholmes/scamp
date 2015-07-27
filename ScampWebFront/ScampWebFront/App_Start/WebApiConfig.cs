@@ -21,6 +21,12 @@ namespace ScampWebFront
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
+                name: "ResourceProvision",
+                routeTemplate: "api/{controller}/{id}/resources/provision",
+                defaults: new { controller = "Course", action = "ResourceProvision" }
+            );
+
+            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }

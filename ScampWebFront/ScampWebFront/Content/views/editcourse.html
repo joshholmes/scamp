@@ -4,11 +4,13 @@
     <input type="text" ng-model="first" class="form-control" placeholder="Enter first name here!" />
     <input type="text" ng-model="last" class="form-control" placeholder="Enter last name here!" />
     <input type="text" ng-model="email" class="form-control" placeholder="Enter email here!" />
-    <div><a href="" data-ng-click="addStudent(first, last, email)">add</a></div>
+    <div><a href="" data-ng-click="addStudent(first, last, email)">Add Student</a></div>
+
+    <div><a href="" data-ng-click="provisionAccounts()">Provision Accounts for Class</a></div>
 
     <div>
-        <ul ng-repeat="s in course.Students | orderBy: 'name' ">
-            <li>{{s.FirstName}}</li>
+        <ul ng-repeat="s in course.Students | orderBy: ['LastName', 'FirstName'] ">
+            <li>{{s.LastName}}, {{s.FirstName}}</li>
         </ul>
     </div>
 

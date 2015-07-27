@@ -17,4 +17,8 @@ app.controller('editcourseController', function ($scope, $location, $route, Cour
 
         $scope.$apply();
     };
+
+    $scope.provisionAccounts = function () {
+        $scope.course.$provision({ 'id': id });
+    };
 });

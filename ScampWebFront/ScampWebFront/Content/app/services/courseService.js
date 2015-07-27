@@ -15,6 +15,8 @@ services.factory('CourseFactory', function ($resource) {
     return $resource(baseUrl + '/course/:id', {}, {
         show: { method: 'GET' },
         update: { method: 'PUT', params: { id: '@id' } },
-        delete: { method: 'DELETE', params: { id: '@id' } }
+        delete: { method: 'DELETE', params: { id: '@id' } },
+        provision: { method: 'POST', params: { id: '@id' }, url: baseUrl + '/course/:id/resources/provision' }
     })
 });
+

@@ -99,6 +99,23 @@ namespace ScampWebFront.Controllers
             return CreatedAtRoute("DefaultApi", new { id = course.Id }, course);
         }
 
+        // POST api/Course/{name}/resources/provision
+        [ResponseType(typeof(Course))]
+        public IHttpActionResult ResourceProvision(int id, Course course)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            foreach (Student s in course.Students) 
+            {
+                
+            }
+
+            return Ok(course);
+        }
+
         // DELETE api/Course/5
         [ResponseType(typeof(Course))]
         public IHttpActionResult DeleteCourse(int id)
