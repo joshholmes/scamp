@@ -1,0 +1,49 @@
+﻿#logo {
+padding-left:3px;
+}
+.venueName{
+    margin-top:6px;
+}
+.venueIcon{
+    margin-left:-7px;
+}
+
+.photoCaption{
+    margin-bottom:15px;
+}
+
+.pagination a {
+ cursor: pointer;
+}
+.seperator{
+    margin:3px 0 6px 0;
+}
+
+body {
+   padding-bottom:20px;   /* Height of the footer */
+}
+
+footer {
+   position:absolute;
+   bottom:0;
+   width:100%;
+   height:20px;   /* Height of the footer */
+
+}
+
+ul.courseTiles {
+        width: 800px;
+        list-style: none;
+        padding: 0;
+        text-align: center;
+        overflow: auto;
+    }
+
+    li.courseTile {
+        background-color: lightgray;
+        border: 2px solid darkgray;
+        float: left;
+        width: 155px;
+        height: 100px;
+        margin: 5px 5px 0 0;
+    }

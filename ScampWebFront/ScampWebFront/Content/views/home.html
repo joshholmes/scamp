@@ -1,8 +1,0 @@
-﻿<div>Home.</div>
-<div data-ng-class="{'active':isActive('/createcourse')}"><a href="#/createcourse">Create a course</a></div>
-
-<div ng-controller="createcourseController">
-    <ul ng-repeat="c in courses | orderBy: 'name' ">
-        <li><a href="/#/editcourse?id={{c.Id}}">{{c.Name}}</a></li>
-    </ul>
-</div>

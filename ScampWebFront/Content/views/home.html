@@ -1,0 +1,18 @@
+﻿<div>Home.</div>
+<div data-ng-class="{'active':isActive('/createcourse')}"><a href="#/createcourse">Create a course</a></div>
+
+<style>
+    .cost {
+        font-weight: bold;
+        font-size: large;
+    }
+</style>
+<div ng-controller="homeController">
+    <ul class="courseTiles">
+        <li class="courseTile" ng-repeat="c in courses | orderBy: 'name'">
+            <a href="/#/editcourse?id={{c.Id}}">{{c.Name}}</a><br />
+            Expires {{c.ExpirationTime | date:'yyyy-MM-dd'}} <br/>
+            <span class="cost">$0.00</span>
+        </li>
+    </ul>
+</div>

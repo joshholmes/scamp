@@ -1,0 +1,51 @@
+﻿<style>
+    .siteList td {
+        border: 2px solid lightgray;
+    }
+
+    .siteList thead td {
+        font-weight: bold;
+    }
+</style>
+<div>
+    <div>Add students to {{course.Name}}</div>
+
+    <div>
+        <b>Course:</b> {{course.Name}} <br />
+        <b>Expires:</b> {{course.ExpirationTime | date:'yyyy-MM-dd'}} <br />
+        <b>State:</b> {{getState()}}
+    </div>
+
+    <input type="text" ng-model="first" class="form-control" placeholder="Enter first name here!" />
+    <input type="text" ng-model="last" class="form-control" placeholder="Enter last name here!" />
+    <input type="text" ng-model="email" class="form-control" placeholder="Enter email here!" />
+    <div><a href="" data-ng-click="addStudent(first, last, email)">Add Student</a></div>
+
+    <div><a href="" data-ng-click="provisionAccounts()">Provision Accounts for Class</a></div>
+
+    <div>
+        <table class="siteList">
+            <thead>
+            <tr>
+                <td>Cost</td>
+                <td>First Name</td>
+                <td>Last Name</td>
+                <td>WebSite</td>
+                <td>FTP Site</td>
+                <td>Username</td>
+                <td>Password</td>
+            </tr>
+            </thead>
+            <tr ng-repeat="s in course.Students | orderBy: ['LastName', 'FirstName']">
+                <td>$0.00</td>
+                <td>{{s.FirstName}}</td>
+                <td>{{s.LastName}}</td>
+                <td>{{s.WebSiteUri}}</td>
+                <td>{{s.FtpUri}}</td>
+                <td>{{s.FtpUsername}}</td>
+                <td>{{s.FtpPassword}} </td>
+            </tr>
+        </table>
+    </div>
+
+</div>

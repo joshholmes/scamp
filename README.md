@@ -1,2 +1,0 @@
-# scamp
-Scamp v2
