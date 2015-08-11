@@ -33,42 +33,51 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GSUProduction|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\GSUProduction\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Hyak.Common">
       <HintPath>..\packages\Hyak.Common.1.0.2\lib\net45\Hyak.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Commands.Resources">
-      <HintPath>C:\src\ScampSite\scamp\AzureSamples\packages\AzureReferences\Microsoft.Azure.Commands.Resources.dll</HintPath>
+      <HintPath>..\PrivateAzureReferences\Microsoft.Azure.Commands.Resources.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Commands.Tags">
-      <HintPath>C:\src\ScampSite\scamp\AzureSamples\packages\AzureReferences\Microsoft.Azure.Commands.Tags.dll</HintPath>
+      <HintPath>..\PrivateAzureReferences\Microsoft.Azure.Commands.Tags.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Commands.Websites">
-      <HintPath>C:\src\ScampSite\scamp\AzureSamples\packages\AzureReferences\Microsoft.Azure.Commands.Websites.dll</HintPath>
+      <HintPath>..\PrivateAzureReferences\Microsoft.Azure.Commands.Websites.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Common">
-      <HintPath>C:\src\ScampSite\scamp\AzureSamples\packages\AzureReferences\Microsoft.Azure.Common.dll</HintPath>
+      <HintPath>..\PrivateAzureReferences\Microsoft.Azure.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Common.Authentication">
-      <HintPath>C:\src\ScampSite\scamp\AzureSamples\packages\AzureReferences\Microsoft.Azure.Common.Authentication.dll</HintPath>
+      <HintPath>..\PrivateAzureReferences\Microsoft.Azure.Common.Authentication.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Common.NetFramework">
-      <HintPath>C:\src\ScampSite\scamp\AzureSamples\packages\AzureReferences\Microsoft.Azure.Common.NetFramework.dll</HintPath>
+      <HintPath>..\PrivateAzureReferences\Microsoft.Azure.Common.NetFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Gallery">
-      <HintPath>C:\src\ScampSite\scamp\AzureSamples\packages\AzureReferences\Microsoft.Azure.Gallery.dll</HintPath>
+      <HintPath>..\PrivateAzureReferences\Microsoft.Azure.Gallery.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Graph.RBAC">
-      <HintPath>C:\src\ScampSite\scamp\AzureSamples\packages\AzureReferences\Microsoft.Azure.Graph.RBAC.dll</HintPath>
+      <HintPath>..\PrivateAzureReferences\Microsoft.Azure.Graph.RBAC.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Management.Authorization">
-      <HintPath>C:\src\ScampSite\scamp\AzureSamples\packages\AzureReferences\Microsoft.Azure.Management.Authorization.dll</HintPath>
+      <HintPath>..\PrivateAzureReferences\Microsoft.Azure.Management.Authorization.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Management.WebSites">
-      <HintPath>C:\src\ScampSite\scamp\AzureSamples\packages\AzureReferences\Microsoft.Azure.Management.WebSites.dll</HintPath>
+      <HintPath>..\PrivateAzureReferences\Microsoft.Azure.Management.WebSites.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.ResourceManager">
-      <HintPath>C:\src\ScampSite\scamp\AzureSamples\packages\AzureReferences\Microsoft.Azure.ResourceManager.dll</HintPath>
+      <HintPath>..\PrivateAzureReferences\Microsoft.Azure.ResourceManager.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Data.Edm, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -83,10 +92,10 @@
       <HintPath>..\packages\Microsoft.Data.Services.Client.5.6.2\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory">
-      <HintPath>C:\src\ScampSite\scamp\AzureSamples\packages\AzureReferences\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+      <HintPath>..\PrivateAzureReferences\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms">
-      <HintPath>C:\src\ScampSite\scamp\AzureSamples\packages\AzureReferences\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll</HintPath>
+      <HintPath>..\PrivateAzureReferences\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ServiceBus">
       <HintPath>..\packages\WindowsAzure.ServiceBus.2.7.5\lib\net40-full\Microsoft.ServiceBus.dll</HintPath>
@@ -102,15 +111,15 @@
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Commands.Common">
-      <HintPath>C:\src\ScampSite\scamp\AzureSamples\packages\AzureReferences\Microsoft.WindowsAzure.Commands.Common.dll</HintPath>
+      <HintPath>..\PrivateAzureReferences\Microsoft.WindowsAzure.Commands.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Configuration">
       <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.2.0.3\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Diagnostics, Version=2.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+    <Reference Include="Microsoft.WindowsAzure.Diagnostics, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=2.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+    <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Storage">
@@ -146,7 +155,9 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provisioning\AzureFactory.cs" />
+    <Compile Include="Provisioning\Billing\AzureBillingClient.cs" />
     <Compile Include="Provisioning\Factories\AssignUserToRoleFactory.cs" />
+    <Compile Include="Provisioning\Factories\BillingFactory.cs" />
     <Compile Include="Provisioning\Factories\CreateResourceGroupFactory.cs" />
     <Compile Include="Provisioning\Factories\CreateWebHostingPlanFactory.cs" />
     <Compile Include="Provisioning\Factories\CreateWebSiteFactory.cs" />

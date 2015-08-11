@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ServiceConfiguration serviceName="SiteProvisionService" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2014-06.2.4">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="SiteProvisionService" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2015-04.2.6">
   <Role name="SiteProvisioningWorker">
     <Instances count="1" />
     <ConfigurationSettings>
-      <Setting name="SBConnectionString" value="Endpoint=sb://gsusiteprovisioning.servicebus.windows.net/;SharedAccessKeyName=ReadOnly;SharedAccessKey=twWC/kahxCEEWqM0SL3t2ubFisMWNl++MGY6T6CuJDM=" />
-      <Setting name="SBTopic" value="SCAMP" />
+      <Setting name="SBConnectionString" value="Endpoint=sb://ericmaino.servicebus.windows.net/;SharedAccessKeyName=PublishOnly;SharedAccessKey=1Yrw0kW5sgCYeD/K96VRamn8m73ifBkR3PT9rfpbhTs=" />
+      <Setting name="SBTopic" value="ProvisionRequests" />
       <Setting name="SBSubscription" value="Production" />
-      <Setting name="StorageConnectionString" value="DefaultEndpointsProtocol=https;AccountName=gsuscampprod;AccountKey=9rq9TwICSY07IQYFM8iKeZIWD74SFbMZOUEbBdPQCc5TVnVxLLj7MLhPJ5hCpjV+HHA6Ltdh2Q17umh4mxyW8g==" />
+      <Setting name="StorageConnectionString" value="UseDevelopmentStorage=true" />
       <Setting name="ProvisionTable" value="SCAMP" />
     </ConfigurationSettings>
   </Role>

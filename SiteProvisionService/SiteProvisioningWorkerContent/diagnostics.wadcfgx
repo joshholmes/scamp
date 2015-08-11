@@ -37,5 +37,5 @@
   <PrivateConfig xmlns="http://schemas.microsoft.com/ServiceHosting/2010/10/DiagnosticsConfiguration">
     <StorageAccount name="gsuscampprod" endpoint="https://core.windows.net/" />
   </PrivateConfig>
-  <IsEnabled>true</IsEnabled>
+  <IsEnabled>false</IsEnabled>
 </DiagnosticsConfiguration>

@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using SCAMP.Provisioning.Factories;
 
 namespace SiteProvisioningWorker
 {
