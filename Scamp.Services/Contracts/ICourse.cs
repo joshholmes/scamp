@@ -10,5 +10,6 @@ namespace SCAMP.Contracts
         CourseState State { get; set; }
         DateTimeOffset ExpirationTime { get; set; }
         IProfessor Professor { get; set; }
+        Decimal Cost { get; set; }
     }
 }

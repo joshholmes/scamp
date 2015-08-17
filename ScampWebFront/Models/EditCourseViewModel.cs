@@ -13,6 +13,7 @@ namespace ScampWebFront.Models
         public DateTimeOffset ExpirationTime { get; set; }
         public IProfessor Professor { get; set; }
         public CourseState State { get; set; }
+        public Decimal Cost { get; set; }
     }
 
     public class NewStudentViewModel : IStudent

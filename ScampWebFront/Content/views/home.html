@@ -12,7 +12,7 @@
         <li class="courseTile" ng-repeat="c in courses | orderBy: 'name'">
             <a href="/#/editcourse?id={{c.Id}}">{{c.Name}}</a><br />
             Expires {{c.ExpirationTime | date:'yyyy-MM-dd'}} <br/>
-            <span class="cost">$0.00</span>
+            <span class="cost">${{c.Cost}}</span>
         </li>
     </ul>
 </div>
